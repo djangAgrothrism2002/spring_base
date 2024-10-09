@@ -1,0 +1,20 @@
+version: '3.0'
+
+services:
+  vpbank_db:
+    container_name: vpbank_db
+    image: mysql:8.0.38-bookworm
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: vpbank_db
+        MYSQL_USER: vpbank
+        MYSQL_PASSWORD: vpbank
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p root"]
+      interval: 3s
+      timeout: 20s
+      retries: 8
